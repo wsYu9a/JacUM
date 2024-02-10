@@ -20,44 +20,6 @@ public class ShiroConfig {
     private UserRealm userRealm;
 
     /**
-     *安全管理器
-     * @return
-     */
-    @Bean("securityManager")
-    public DefaultWebSecurityManager defaultWebSecurityManager(){
-        //创建了一个 DefaultWebSecurityManager 对象 securityManager
-        DefaultWebSecurityManager securityManager = new DefaultWebSecurityManager();
-        //关联userRealm
-        securityManager.setRealm(userRealm);
-        //设置rememberMe
-        securityManager.setRememberMeManager(rememberMeManager());
-        return securityManager;
-    }
-
-    /**
-     * cookie 属性设置
-     * @return
-     */
-    public SimpleCookie rememberMeCookie() {
-        SimpleCookie cookie = new SimpleCookie("ShiroTest_RememberMe");
-        cookie.setPath("/");
-        cookie.setHttpOnly(true);
-        cookie.setMaxAge(30 * 24 * 60 * 60);
-        return cookie;
-    }
-
-    /**
-     * Shiro的cookie管理对象
-     * @return
-     */
-    public CookieRememberMeManager rememberMeManager() {
-        CookieRememberMeManager cookieRememberMeManager = new CookieRememberMeManager();
-        cookieRememberMeManager.setCookie(rememberMeCookie());
-        cookieRememberMeManager.setCipherKey("1234567890987654".getBytes());
-        return cookieRememberMeManager;
-    }
-
-    /**
      * 自定义角色过滤器
      * @return
      */
@@ -103,7 +65,42 @@ public class ShiroConfig {
         return shiroFilterFactoryBean;
     }
 
+    /**
+     * cookie 属性设置
+     * @return
+     */
+    public SimpleCookie rememberMeCookie() {
+        SimpleCookie cookie = new SimpleCookie("ShiroTest_RememberMe");
+        cookie.setPath("/");
+        cookie.setHttpOnly(true);
+        cookie.setMaxAge(30 * 24 * 60 * 60);
+        return cookie;
+    }
 
+    /**
+     * Shiro的cookie管理对象
+     * @return
+     */
+    public CookieRememberMeManager rememberMeManager() {
+        CookieRememberMeManager cookieRememberMeManager = new CookieRememberMeManager();
+        cookieRememberMeManager.setCookie(rememberMeCookie());
+        cookieRememberMeManager.setCipherKey("1234567890987654".getBytes());
+        return cookieRememberMeManager;
+    }
 
+    /**
+     *安全管理器
+     * @return
+     */
+    @Bean("securityManager")
+    public DefaultWebSecurityManager defaultWebSecurityManager(){
+        //创建了一个 DefaultWebSecurityManager 对象 securityManager
+        DefaultWebSecurityManager securityManager = new DefaultWebSecurityManager();
+        //关联userRealm
+        securityManager.setRealm(userRealm);
+        //设置rememberMe
+        securityManager.setRememberMeManager(rememberMeManager());
+        return securityManager;
+    }
 
 }
